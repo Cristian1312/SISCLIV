@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 21/09/2015 09:52:59 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="pe.edu.unmsm.veterinaria.clinica.entities.Cliente" table="Cliente" catalog="eleganti_siscliv">
+        <id name="idCliente" type="java.lang.Integer">
+            <column name="idCliente" />
+            <generator class="identity" />
+        </id>
+        <property name="nombres" type="string">
+            <column name="nombres" length="100" />
+        </property>
+        <property name="apellidos" type="string">
+            <column name="apellidos" length="100" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="direccion" length="500" />
+        </property>
+        <property name="distrito" type="string">
+            <column name="distrito" length="100" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="telefono" length="10" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="100" />
+        </property>
+        <property name="dni" type="string">
+            <column name="dni" length="8" />
+        </property>
+        <set name="pacientes" table="Paciente" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Cliente_idCliente" not-null="true" />
+            </key>
+            <one-to-many class="pe.edu.unmsm.veterinaria.clinica.entities.Paciente" />
+        </set>
+    </class>
+</hibernate-mapping>

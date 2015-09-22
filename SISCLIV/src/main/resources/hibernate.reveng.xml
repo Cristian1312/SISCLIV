@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table-filter match-catalog="eleganti_siscliv" match-name="Cliente" />
+	<table-filter match-catalog="eleganti_siscliv" match-name="Historial" />
+	<table-filter match-catalog="eleganti_siscliv" match-name="Opcion" />
+	<table-filter match-catalog="eleganti_siscliv" match-name="Paciente" />
+	<table-filter match-catalog="eleganti_siscliv" match-name="Perfil" />
+	<table-filter match-catalog="eleganti_siscliv" match-name="Usuario" />
+</hibernate-reverse-engineering>
