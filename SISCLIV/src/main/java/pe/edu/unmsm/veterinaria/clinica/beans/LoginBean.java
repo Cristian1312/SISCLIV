@@ -50,7 +50,7 @@ public class LoginBean implements Serializable {
             if (this.usuario != null) {
                 facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido",
                         this.usuario.getUsuario());
-                view = "tareasJefaUrcs.xhtml";
+                view = "tareasRecepcionista.xhtml";
             } else {
                 facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Error",
                         "Usuario y/o contraseña incorrecto");
