@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.hibernate.Session;
@@ -21,8 +21,8 @@ import pe.edu.unmsm.veterinaria.clinica.persistencia.NewHibernateUtil;
 *
 * @author Cristian1312
 */
-@ManagedBean
-@SessionScoped
+@ManagedBean(name="clienteBean", eager = true)
+@ApplicationScoped
 public class ClienteBean implements Serializable {
 	Session session;
     Transaction transaction;
