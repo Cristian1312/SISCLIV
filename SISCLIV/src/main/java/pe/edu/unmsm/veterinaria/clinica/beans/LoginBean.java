@@ -23,6 +23,7 @@ import pe.edu.unmsm.veterinaria.clinica.persistencia.NewHibernateUtil;
 /**
  *
  * @author Cristian1312
+ * Probando un comentario sin malograr
  */
 @ManagedBean
 @SessionScoped
