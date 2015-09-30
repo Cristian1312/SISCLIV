@@ -8,14 +8,26 @@ and open the template in the editor.
     Author     : SILVIA
 */
 
-body, html {
+/*body, html {
     height: 100%;
     background-repeat: no-repeat;
     background-color: #560211;
-    /*background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));*/
+    background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));
     background-image: linear-gradient(#40010d, #730217);
+}*/
+
+body {
+    background: url("../images/fondo-huellas.jpg") no-repeat center center fixed;
+    background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
 }
 
 .container{
-    background-color: #570212;
+    background: url("../images/fondo-huellas.jpg") no-repeat center center fixed;
+    background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
 }

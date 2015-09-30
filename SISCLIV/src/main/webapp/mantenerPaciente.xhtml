@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Bienvenidos a SISCLIV!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet"
+              media="screen" />
+        <link href="resources/css/fondo.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="resources/images/favicon.jpg"
+              type="image/x-icon" />
+    </h:head>
+    <h:body>
+        <section class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <b>Registrar Paciente</b>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <h:form id="pacienteForm" styleClass="form-horizontal">
+                        <p:growl id="mensajeGeneral" showDetail="false" />
+                        <div class="form-group">
+                            <label for="dniCliente" class="col-sm-2 control-label">DNI
+                                Cliente:</label>
+                            <div class="col-sm-4">
+
+                                <p:autoComplete id="dniCliente" value="#{pacienteBean.cliente}"
+                                                completeMethod="#{pacienteBean.completeCliente}" var="cliente"
+                                                itemLabel="#{cliente.dni}" itemValue="#{cliente}"
+                                                converter="clienteConverter" forceSelection="true" />
+
+
+                            </div>
+                            <div class="col-sm-offset-2 col-sm-4" style="padding-left: 75px">
+                                <p:commandButton value="Completar" ajax="false"
+                                                 styleClass="btn btn-primary" update="output" />
+                            </div>
+                        </div>
+                        <br />
+                        <p:panel id="output">
+                            <div class="form-group">
+                                <label for="nombres" class="col-sm-2 control-label">Nombres
+                                    y Apellidos</label>
+                                <div class="col-sm-4">
+                                    <p:inputText id="nombres"
+                                                 value="#{pacienteBean.cliente.nombres} 
+                                                 #{pacienteBean.cliente.apellidos}"
+                                                 styleClass="form-control" readonly="true" />
+                                </div>
+                                <label for="dni" class="col-sm-2 control-label">N° DNI</label>
+                                <div class="col-sm-4">
+                                    <p:inputText id="dni" value="#{pacienteBean.cliente.dni}"
+                                                 readonly="true" styleClass="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="direccion" class="col-sm-2 control-label">Direccion</label>
+                                <div class="col-sm-4">
+                                    <p:inputText id="direccion"
+                                                 value="#{pacienteBean.cliente.direccion} 
+                                                 #{pacienteBean.cliente.distrito}"
+                                                 styleClass="form-control" readonly="true" />
+                                </div>
+                                <label for="telefono" class="col-sm-2 control-label">Telefono</label>
+                                <div class="col-sm-4">
+                                    <p:inputText id="telefono"
+                                                 value="#{pacienteBean.cliente.telefono}" readonly="true"
+                                                 styleClass="form-control" />
+                                </div>
+                            </div>
+                        </p:panel>
+                    </h:form>
+                    <h:form id="pacienteForm2" styleClass="form-horizontal">
+                        <p:panel id="outputPaciente">
+                            <div class="form-group">
+                                <label for="nombrePac" class="col-sm-2 control-label">Nombre</label>
+                                <div class="col-sm-4">
+                                    <p:inputText id="nombrePac"
+                                                 value="#{pacienteBean.paciente.nombre}"
+                                                 styleClass="form-control" required="true"/>
+                                </div>
+                                <label for="especie" class="col-sm-2 control-label">Especie</label>
+                                <div class="col-sm-4">
+                                    <p:inputText id="especie"
+                                                 value="#{pacienteBean.paciente.especie}"
+                                                 styleClass="form-control" required="true"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="raza" class="col-sm-2 control-label">Raza</label>
+                                <div class="col-sm-4">
+                                    <p:inputText id="raza" value="#{pacienteBean.paciente.raza}"
+                                                 styleClass="form-control" />
+                                </div>
+                                <label for="fechaNac" class="col-sm-2 control-label">Fecha
+                                    de Nacimiento</label>
+                                <div class="col-sm-4">
+                                    <p:calendar id="fechaNac"
+                                                value="#{pacienteBean.paciente.fechaNac}" locale="de"
+                                                navigator="true" pattern="yyyy-MM-dd" required="true"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="sexo" class="col-sm-2 control-label">Sexo</label>
+                                <div class="col-sm-4">
+                                    <p:selectOneRadio id="sexo" value="#{pacienteBean.paciente.sexo}" required="true">
+                                        <f:selectItem itemLabel="Macho" itemValue="1" />
+                                        <f:selectItem itemLabel="Hembra" itemValue="2" />
+                                    </p:selectOneRadio>
+                                </div>
+                                <label for="intacto" class="col-sm-2 control-label">Intacto</label>
+                                <div class="col-sm-4">
+                                    <p:selectOneRadio id="intacto" value="#{pacienteBean.paciente.intacto}" required="true">
+                                        <f:selectItem itemLabel="Si" itemValue="1" />
+                                        <f:selectItem itemLabel="No" itemValue="0" />
+                                    </p:selectOneRadio>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="castrado" class="col-sm-2 control-label">Castrado</label>
+                                <div class="col-sm-4">
+                                    <p:selectOneRadio id="castrado" value="#{pacienteBean.paciente.castrado}" >
+                                        <f:selectItem itemLabel="Si" itemValue="1" />
+                                        <f:selectItem itemLabel="No" itemValue="0" />
+                                        <f:ajax render="cuandoCas"/>
+                                    </p:selectOneRadio>
+                                </div>
+                                <label for="cuandoCas" class="col-sm-2 control-label">Cuando</label>
+                                <div class="col-sm-4">
+                                    <p:calendar id="cuandoCas"
+                                                value="#{pacienteBean.paciente.cuandoCastrado}" locale="de"
+                                                navigator="true" pattern="yyyy-MM-dd" 
+                                                disabled="#{pacienteBean.paciente.castrado == '0'}"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="color" class="col-sm-2 control-label">Color</label>
+                                <div class="col-sm-4">
+                                    <p:inputText id="color" required="true"
+                                                 value="#{pacienteBean.paciente.colorSennas}"
+                                                 styleClass="form-control" />
+                                </div>
+                                <div class="col-sm-offset-2 col-sm-4" style="padding-left: 75px">
+                                    <p:commandButton value="Registrar" ajax="false"
+                                                     action="#{pacienteBean.registrarPaciente}"
+                                                     styleClass="btn btn-primary" />
+                                </div>
+                            </div>
+                        </p:panel>
+                    </h:form>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+        </section>
+    </h:body>
+</html>
