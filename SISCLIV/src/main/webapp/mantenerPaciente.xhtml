@@ -36,7 +36,7 @@
                                  paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
                                  {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10"
                                  style="width: 98%;margin: auto;">
-                        <p:column headerText="N° Historial" style="text-align: left;">
+                        <p:column filterBy="#{pac.idPaciente}" headerText="N° Historial" style="text-align: left;" filterMatchMode="contains">
                             <h:outputText value="#{pac.idPaciente}" />
                         </p:column>
                         <p:column headerText="Nombre" style="text-align: left; width: 120px">
