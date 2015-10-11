@@ -1,19 +1,31 @@
 package pe.edu.unmsm.veterinaria.clinica.beans;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.primefaces.context.RequestContext;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import pe.edu.unmsm.veterinaria.clinica.dao.PacienteDao;
 import pe.edu.unmsm.veterinaria.clinica.entities.Cliente;
 import pe.edu.unmsm.veterinaria.clinica.entities.Paciente;
@@ -92,7 +104,6 @@ public class PacienteBean implements Serializable {
         this.transaction = null;
 
         try {
-//            this.paciente.setCliente(cliente);
             this.session = NewHibernateUtil.getSessionFactory().openSession();
             IPacienteDao pacienteDao = new PacienteDao();
             this.transaction = this.session.beginTransaction();
@@ -115,6 +126,50 @@ public class PacienteBean implements Serializable {
                 this.session.close();
             }
         }
+    }
+    
+    public List<Paciente> getPacienteParaCarnet(int idPaciente) {
+        this.session = null;
+        this.transaction = null;
+        try {
+            this.session = NewHibernateUtil.getSessionFactory().openSession();
+            IPacienteDao pacienteDao = new PacienteDao();
+            this.transaction = this.session.beginTransaction();
+            List<Paciente> pacienteParaCarnet = pacienteDao.getPacienteById(session, idPaciente);
+            this.transaction.commit();
+            return pacienteParaCarnet;
+        } catch (Exception ex) {
+            if (this.transaction != null) {
+                transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+                    FacesMessage.SEVERITY_FATAL, "Error", ex.getMessage()));
+            return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+    
+    public void generarCarnetPaciente(ActionEvent actionEvent, int idPaciente) throws JRException, IOException {
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put("txtNombreFacultad", "Facultad de Medicina Veterinaria");
+        parametros.put("txtUniversidad", "UNMSM");
+        parametros.put("txtNombreClinica", "Clinica de Animales Menores");
+
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reportes/carnetPaciente.jasper"));
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(this.getPacienteParaCarnet(idPaciente)));
+
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=carnetPaciente.pdf");
+        ServletOutputStream stream = response.getOutputStream();
+
+        JasperExportManager.exportReportToPdfStream(jasperPrint, stream);
+
+        stream.flush();
+        stream.close();
+        FacesContext.getCurrentInstance().responseComplete();
     }
 
     public Paciente getPaciente() {

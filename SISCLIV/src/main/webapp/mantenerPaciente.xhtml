@@ -65,6 +65,10 @@
                                 <f:setPropertyActionListener target="#{pacienteBean.paciente}" value="#{pac}" />                 
                             </p:commandButton>
                         </p:column>
+                        <p:column headerText="Carnet">
+                            <p:commandButton style="width: 35px;" value="" actionListener="#{pacienteBean.generarCarnetPaciente(actionEvent, pac.idPaciente)}"
+                                    ajax="false" styleClass="btn btn-primary" icon="ui-icon-document" />
+                        </p:column>
                     </p:dataTable>
                 </h:form>
 
