@@ -5,7 +5,6 @@ import java.util.List;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
-import pe.edu.unmsm.veterinaria.clinica.entities.Cliente;
 import pe.edu.unmsm.veterinaria.clinica.entities.Paciente;
 import pe.edu.unmsm.veterinaria.clinica.interfaces.IPacienteDao;
 
@@ -28,7 +27,7 @@ public class PacienteDao implements IPacienteDao {
             Hibernate.initialize(pac.getSexo());
         }
 
-        return session.createCriteria(Cliente.class).list();
+        return session.createCriteria(Paciente.class).list();
 	}
 
 	@Override
