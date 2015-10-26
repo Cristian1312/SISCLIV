@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/09/2015 09:52:59 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 25/10/2015 10:09:39 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="pe.edu.unmsm.veterinaria.clinica.entities.Cliente" table="Cliente" catalog="eleganti_siscliv">
+    <class name="pe.edu.unmsm.veterinaria.clinica.entities.Cliente" table="cliente" catalog="eleganti_siscliv">
         <id name="idCliente" type="java.lang.Integer">
             <column name="idCliente" />
             <generator class="identity" />
@@ -29,7 +29,7 @@
         <property name="dni" type="string">
             <column name="dni" length="8" />
         </property>
-        <set name="pacientes" table="Paciente" inverse="true" lazy="true" fetch="select">
+        <set name="pacientes" table="paciente" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="Cliente_idCliente" not-null="true" />
             </key>

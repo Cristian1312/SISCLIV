@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 21/09/2015 09:52:59 PM by Hibernate Tools 3.4.0.CR1 -->
+<!-- Generated 25/10/2015 10:09:39 PM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
-    <class name="pe.edu.unmsm.veterinaria.clinica.entities.Usuario" table="Usuario" catalog="eleganti_siscliv">
+    <class name="pe.edu.unmsm.veterinaria.clinica.entities.Usuario" table="usuario" catalog="eleganti_siscliv">
         <id name="idUsuario" type="java.lang.Integer">
             <column name="idUsuario" />
             <generator class="identity" />

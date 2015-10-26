@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
+import pe.edu.unmsm.veterinaria.clinica.entities.Historial;
 import pe.edu.unmsm.veterinaria.clinica.entities.Paciente;
 import pe.edu.unmsm.veterinaria.clinica.interfaces.IPacienteDao;
 
@@ -32,7 +33,10 @@ public class PacienteDao implements IPacienteDao {
 
 	@Override
 	public void insertarPaciente(Session session, Paciente paciente) throws Exception {
-		session.save(paciente);		
+		session.save(paciente);
+		Historial hist = new Historial(paciente);
+		hist.setIdHistorial(paciente.getIdPaciente());
+		session.save(hist);
 	}
 
 	@Override

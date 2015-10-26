@@ -1,5 +1,5 @@
 package pe.edu.unmsm.veterinaria.clinica.entities;
-// Generated 21/09/2015 09:52:59 PM by Hibernate Tools 3.4.0.CR1
+// Generated 25/10/2015 10:09:39 PM by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
 import java.util.HashSet;
@@ -21,6 +21,7 @@ public class Paciente implements java.io.Serializable {
 	private Integer castrado;
 	private Date cuandoCastrado;
 	private String colorSennas;
+	private Set pagoservicios = new HashSet(0);
 	private Set historials = new HashSet(0);
 
 	public Paciente() {
@@ -31,7 +32,8 @@ public class Paciente implements java.io.Serializable {
 	}
 
 	public Paciente(Cliente cliente, String nombre, String especie, String raza, Date fechaNac, Integer sexo,
-			Integer intacto, Integer castrado, Date cuandoCastrado, String colorSennas, Set historials) {
+			Integer intacto, Integer castrado, Date cuandoCastrado, String colorSennas, Set pagoservicios,
+			Set historials) {
 		this.cliente = cliente;
 		this.nombre = nombre;
 		this.especie = especie;
@@ -42,6 +44,7 @@ public class Paciente implements java.io.Serializable {
 		this.castrado = castrado;
 		this.cuandoCastrado = cuandoCastrado;
 		this.colorSennas = colorSennas;
+		this.pagoservicios = pagoservicios;
 		this.historials = historials;
 	}
 
@@ -131,6 +134,14 @@ public class Paciente implements java.io.Serializable {
 
 	public void setColorSennas(String colorSennas) {
 		this.colorSennas = colorSennas;
+	}
+
+	public Set getPagoservicios() {
+		return this.pagoservicios;
+	}
+
+	public void setPagoservicios(Set pagoservicios) {
+		this.pagoservicios = pagoservicios;
 	}
 
 	public Set getHistorials() {
