@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 25/10/2015 10:09:39 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="pe.edu.unmsm.veterinaria.clinica.entities.Analisismedico" table="analisismedico" catalog="eleganti_siscliv">
+        <id name="idAnalisisMedico" type="java.lang.Integer">
+            <column name="idAnalisisMedico" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="atencionmedica" class="pe.edu.unmsm.veterinaria.clinica.entities.Atencionmedica" fetch="select">
+            <column name="AtencionMedica_idAtencionMedica" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tipoanalisis" class="pe.edu.unmsm.veterinaria.clinica.entities.Tipoanalisis" fetch="select">
+            <column name="TipoAnalisis_idTipoAnalisis" not-null="true" />
+        </many-to-one>
+        <many-to-one name="clinicoveterinario" class="pe.edu.unmsm.veterinaria.clinica.entities.Clinicoveterinario" fetch="select">
+            <column name="ClinicoVeterinario_idClinicoVeterinario" not-null="true" />
+        </many-to-one>
+        <set name="detalleanalisises" table="detalleanalisis" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="AnalisisMedico_idAnalisisMedico" />
+            </key>
+            <one-to-many class="pe.edu.unmsm.veterinaria.clinica.entities.Detalleanalisis" />
+        </set>
+    </class>
+</hibernate-mapping>

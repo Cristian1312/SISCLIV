@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <h:head>
+        <title>Bienvenidos a SISCLIV!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet"
+              media="screen" />
+        <link href="resources/css/fondo.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="resources/images/favicon.jpg"
+              type="image/x-icon" />
+    </h:head>
+    <h:body>
+        <section class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <b>Registro de pagos servicios</b>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <h:form id="formPaciente" class="form-horizontal">
+                        <p:growl id="msgAgregar" showDetail="true"/>
+                        <div class="form-group">
+                            <label for="idPaciente" class="col-sm-2 control-label">N° Historial
+                                Paciente:</label>
+                            <div class="col-sm-4">
+
+                                <p:autoComplete id="idPaciente" value="#{pacienteBean.paciente}"
+                                                completeMethod="#{pacienteBean.completePaciente}" var="paciente"
+                                                itemLabel="#{paciente.idPaciente}" itemValue="paciente"
+                                                converter="pacienteConverter" forceSelection="true" />
+
+
+                            </div>
+                            <div class="col-sm-offset-2 col-sm-4" style="padding-left: 75px">
+                                <p:commandButton value="Completar" ajax="true"
+                                                 styleClass="btn btn-primary" update="output" />
+                            </div>
+                        </div>
+                        <br />
+                        <p:panel id="output">
+                            <div class="form-group">
+                                <label for="nombre" class="col-sm-2 control-label">Nombre
+                                    </label>
+                                <div class="col-sm-4">
+                                    <p:inputText id="nombre"
+                                                 value="#{pacienteBean.paciente.nombre}"
+                                                 styleClass="form-control" readonly="true" />
+                                </div>
+                                <label for="especie" class="col-sm-2 control-label">Especie</label>
+                                <div class="col-sm-4">
+                                    <p:inputText id="especie" value="#{pacienteBean.paciente.especie}"
+                                                 readonly="true" styleClass="form-control" />
+                                </div>
+                            </div>
+                        </p:panel>
+                    </h:form>
+                    <p></p>
+                    <h:form id="formPago" class="form-horizontal">
+                        <div class="form-group">
+                            <label for="servicio" class="col-sm-2 control-label">Servicios</label>
+                            <div class="col-sm-4">
+                            
+        						<p:selectOneMenu id="console" value="#{selectOneMenuView.console}" style="width:325px">
+						            <f:selectItem itemLabel="Consulta día (8:00am – 8:00pm) - S/.30.00" itemValue="1" />
+						            <f:selectItem itemLabel="Consulta noche (8:00pm-8:00am) - S/.40.00" itemValue="2" />
+						            <f:selectItem itemLabel="Consulta domingo y feriados - S/.40.00" itemValue="3" />
+						            <f:selectItem itemLabel="Lectura de resultados - S/.10.00" itemValue="4" />
+						        </p:selectOneMenu>
+                            	
+                            </div>
+                            
+                        </div>
+                        
+                        
+                        
+                        <div class="form-group">
+                            
+                            <div class="col-sm-offset-2 col-sm-4" style="padding-left: 75px">
+                                <p:commandButton value="Pagar" ajax="false"
+                                                 action="#{pacienteBean.registrarPagoServicio()}"
+                                                 styleClass="btn btn-primary" />
+                            </div>
+                        </div>
+                    </h:form>
+                </div>  
+
+
+
+
+            </div>
+        </section>
+    </h:body>
+</html>

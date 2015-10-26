@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 25/10/2015 10:09:39 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="pe.edu.unmsm.veterinaria.clinica.entities.Detalleanalisis" table="detalleanalisis" catalog="eleganti_siscliv">
+        <id name="idDetalleAnalisis" type="java.lang.Integer">
+            <column name="idDetalleAnalisis" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="analisismedico" class="pe.edu.unmsm.veterinaria.clinica.entities.Analisismedico" fetch="select">
+            <column name="AnalisisMedico_idAnalisisMedico" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 25/10/2015 10:09:39 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="pe.edu.unmsm.veterinaria.clinica.entities.Estadoatencionmedica" table="estadoatencionmedica" catalog="eleganti_siscliv">
+        <id name="idEstadoAtencionMedica" type="java.lang.Integer">
+            <column name="idEstadoAtencionMedica" />
+            <generator class="identity" />
+        </id>
+        <property name="estado" type="string">
+            <column name="estado" length="45" />
+        </property>
+        <set name="atencionmedicas" table="atencionmedica" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="EstadoAtencionMedica_idEstadoAtencionMedica" />
+            </key>
+            <one-to-many class="pe.edu.unmsm.veterinaria.clinica.entities.Atencionmedica" />
+        </set>
+    </class>
+</hibernate-mapping>
