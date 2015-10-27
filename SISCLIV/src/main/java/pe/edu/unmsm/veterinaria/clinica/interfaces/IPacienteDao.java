@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 
+import pe.edu.unmsm.veterinaria.clinica.entities.Cliente;
 import pe.edu.unmsm.veterinaria.clinica.entities.Paciente;
 
 public interface IPacienteDao {

@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 
+import pe.edu.unmsm.veterinaria.clinica.entities.Cliente;
 import pe.edu.unmsm.veterinaria.clinica.entities.Historial;
 import pe.edu.unmsm.veterinaria.clinica.entities.Paciente;
 import pe.edu.unmsm.veterinaria.clinica.interfaces.IPacienteDao;
@@ -15,6 +16,7 @@ public class PacienteDao implements IPacienteDao {
 	public List<Paciente> getAll(Session session) throws Exception {
 		List<Paciente> pacientes = session.createCriteria(Paciente.class).list();
         for (Paciente pac : pacientes) {
+        	Hibernate.initialize(pac.getCliente());
             Hibernate.initialize(pac.getCastrado());
             Hibernate.initialize(pac.getColorSennas());
             Hibernate.initialize(pac.getCuandoCastrado());
@@ -48,6 +50,7 @@ public class PacienteDao implements IPacienteDao {
 	public List<Paciente> getPacienteById(Session session, int id) {
 		List<Paciente> paciente = session.createQuery("from Paciente where idPaciente = " + id).list();
         for (Paciente pac : paciente) {
+        	Hibernate.initialize(pac.getCliente());
         	Hibernate.initialize(pac.getCastrado());
             Hibernate.initialize(pac.getColorSennas());
             Hibernate.initialize(pac.getCuandoCastrado());
@@ -62,5 +65,5 @@ public class PacienteDao implements IPacienteDao {
         }
         
         return paciente;
-	}	
+	}
 }

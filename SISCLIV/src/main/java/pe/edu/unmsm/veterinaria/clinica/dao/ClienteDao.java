@@ -3,9 +3,11 @@ package pe.edu.unmsm.veterinaria.clinica.dao;
 import java.util.List;
 
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import pe.edu.unmsm.veterinaria.clinica.entities.Cliente;
+import pe.edu.unmsm.veterinaria.clinica.entities.Usuario;
 import pe.edu.unmsm.veterinaria.clinica.interfaces.IClienteDao;
 
 public class ClienteDao implements IClienteDao {
@@ -35,5 +37,5 @@ public class ClienteDao implements IClienteDao {
 	@Override
 	public void modificarCliente(Session session, Cliente cliente) throws Exception {
 		session.update(cliente);		
-	}	
+	}
 }
