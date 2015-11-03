@@ -12,20 +12,6 @@
         <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
         <link href="resources/css/login.css" rel="stylesheet" media="screen" />
         <link rel="shortcut icon" href="resources/images/favicon.jpg" type="image/x-icon" />
-        <script type="text/javascript">
-            function handleLoginRequest(xhr, status, args) {
-                if (args.validationFailed || !args.loggedIn) {
-                    // PF('dlg').jq.effect("shake", {times: 5}, 100);
-                    setTimeout(function () {
-                        window.location = args.view;
-                    }, 500);
-                }
-                else {
-                    PF('dlg').hide();
-                    $('#loginLink').fadeOut();
-                }
-            }
-        </script>
     </h:head>
     <h:body>
         <div class="container">
@@ -35,8 +21,8 @@
                 <h:form class="form-signin">
                     <p:growl id="growl" sticky="false" showDetail="true" life="3000" />
                     <span id="reauth-email" class="reauth-email"></span>
-                    <p:inputText id="correo" value="#{loginBean.usuario.usuario}"
-                                 required="true" label="correo" placeholder="Nombre de usuario"
+                    <p:inputText id="usuario" value="#{loginBean.usuario.usuario}"
+                                 required="true" label="usuario" placeholder="Nombre de usuario"
                                  styleClass="form-control"/>
                     <p:password id="password" value="#{loginBean.usuario.password}"
                                 required="true" label="password" placeholder="Password"
@@ -46,7 +32,7 @@
                             <input type="checkbox" value="remember-me" /> Recuérdame
                         </label>
                     </div>
-                    <p:commandButton value="Login" update="growl" action="#{loginBean.login}"
+                    <p:commandButton value="Login" update="growl" action="#{loginBean.login()}"
                                      oncomplete="handleLoginRequest(xhr, status, args)"
                                      styleClass="btn btn-lg btn-primary btn-block btn-signin"/>
                 </h:form>
