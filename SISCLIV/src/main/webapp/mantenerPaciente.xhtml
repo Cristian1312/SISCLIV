@@ -155,7 +155,7 @@
                     </h:form>
                 </p:dialog>
 
-                <p:dialog id="dlgAgregar" header="Agergar un Paciente" showEffect="explode" hideEffect="explode"
+                <p:dialog id="dlgAgregar" header="Agregar un Paciente" showEffect="explode" hideEffect="explode"
                           widgetVar="dlgagregar" modal="true" resizable="false">
                     <h:form id="formAgregar" class="form-horizontal">
                         <p:growl id="msgAgregar" showDetail="true"/>
@@ -163,13 +163,10 @@
                             <label for="dniCliente" class="col-sm-2 control-label">DNI
                                 Cliente:</label>
                             <div class="col-sm-4">
-
                                 <p:autoComplete id="dniCliente" value="#{pacienteBean.cliente}"
                                                 completeMethod="#{pacienteBean.completeCliente}" var="cliente"
                                                 itemLabel="#{cliente.dni}" itemValue="#{cliente}"
                                                 converter="clienteConverter" forceSelection="true" />
-
-
                             </div>
                             <div class="col-sm-offset-2 col-sm-4" style="padding-left: 75px">
                                 <p:commandButton value="Completar" ajax="true"

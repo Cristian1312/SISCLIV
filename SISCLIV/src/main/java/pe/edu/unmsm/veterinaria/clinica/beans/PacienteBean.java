@@ -68,20 +68,6 @@ public class PacienteBean implements Serializable {
 
         return clientesFiltrados;
     }
-    
-    public List<Paciente> completePaciente(String query) {
-        List<Paciente> pacientes = this.getPacientes();
-        List<Paciente> pacientesFiltrados = new ArrayList<Paciente>();
-
-        for (int i = 0; i < pacientes.size(); i++) {
-        	Paciente pa = pacientes.get(i);
-            //if (pa.getIdPaciente().toString().equals(query)) {
-                pacientesFiltrados.add(pa);
-            //}
-        }
-
-        return pacientes;
-    }
 
     public void registrarPaciente() {
         this.session = null;

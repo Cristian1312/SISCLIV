@@ -25,22 +25,19 @@
                 </div>
                 <div class="panel-body">
                     <h:form id="formPaciente" class="form-horizontal">
-                        <p:growl id="msgAgregar" showDetail="true"/>
+                        <p:growl id="msgPagar" showDetail="true"/>
                         <div class="form-group">
                             <label for="idPaciente" class="col-sm-2 control-label">N° Historial
                                 Paciente:</label>
                             <div class="col-sm-4">
-
-                                <p:autoComplete id="idPaciente" value="#{pacienteBean.paciente}"
-                                                completeMethod="#{pacienteBean.completePaciente}" var="paciente"
-                                                itemLabel="#{paciente.idPaciente}" itemValue="paciente"
+                                <p:autoComplete id="idPaciente" value="#{registrarPagoBean.paciente}"
+                                                completeMethod="#{registrarPagoBean.completePaciente}" var="paciente"
+                                                itemLabel="#{paciente.idPaciente}" itemValue="#{paciente}"
                                                 converter="pacienteConverter" forceSelection="true" />
-
-
                             </div>
                             <div class="col-sm-offset-2 col-sm-4" style="padding-left: 75px">
                                 <p:commandButton value="Completar" ajax="true"
-                                                 styleClass="btn btn-primary" update="output" />
+                                                 styleClass="btn btn-primary" update=":formPaciente:output" />
                             </div>
                         </div>
                         <br />
@@ -50,12 +47,12 @@
                                     </label>
                                 <div class="col-sm-4">
                                     <p:inputText id="nombre"
-                                                 value="#{pacienteBean.paciente.nombre}"
+                                                 value="#{registrarPagoBean.paciente.nombre}"
                                                  styleClass="form-control" readonly="true" />
                                 </div>
                                 <label for="especie" class="col-sm-2 control-label">Especie</label>
                                 <div class="col-sm-4">
-                                    <p:inputText id="especie" value="#{pacienteBean.paciente.especie}"
+                                    <p:inputText id="especie" value="#{registrarPagoBean.paciente.especie}"
                                                  readonly="true" styleClass="form-control" />
                                 </div>
                             </div>
@@ -66,34 +63,22 @@
                         <div class="form-group">
                             <label for="servicio" class="col-sm-2 control-label">Servicios</label>
                             <div class="col-sm-4">
-                            
-        						<p:selectOneMenu id="console" value="#{selectOneMenuView.console}" style="width:325px">
-						            <f:selectItem itemLabel="Consulta día (8:00am – 8:00pm) - S/.30.00" itemValue="1" />
-						            <f:selectItem itemLabel="Consulta noche (8:00pm-8:00am) - S/.40.00" itemValue="2" />
-						            <f:selectItem itemLabel="Consulta domingo y feriados - S/.40.00" itemValue="3" />
-						            <f:selectItem itemLabel="Lectura de resultados - S/.10.00" itemValue="4" />
-						        </p:selectOneMenu>
-                            	
+						        <h:selectOneMenu id="servicio" value="#{registrarPagoBean.servicio.idServicio}" styleClass="form-control"
+						        		required="true">
+	                                <f:selectItem itemLabel="--Seleccione servicio--" itemValue="" noSelectionOption="true" />
+	                                <f:selectItems value="#{registrarPagoBean.selectItemsOneServicio}" />
+	                            </h:selectOneMenu>
                             </div>
-                            
                         </div>
-                        
-                        
-                        
                         <div class="form-group">
-                            
                             <div class="col-sm-offset-2 col-sm-4" style="padding-left: 75px">
                                 <p:commandButton value="Pagar" ajax="false"
-                                                 action="#{pacienteBean.registrarPagoServicio()}"
+                                                 action="#{registrarPagoBean.registrarPagoServicio}"
                                                  styleClass="btn btn-primary" />
                             </div>
                         </div>
                     </h:form>
-                </div>  
-
-
-
-
+                </div>
             </div>
         </section>
     </h:body>
