@@ -6,9 +6,6 @@
   <table-filter match-catalog="eleganti_siscliv" match-name="atencionmedica"/>
   <table-filter match-catalog="eleganti_siscliv" match-name="cliente"/>
   <table-filter match-catalog="eleganti_siscliv" match-name="clinicoveterinario"/>
-  <table-filter match-catalog="eleganti_siscliv" match-name="detalleanalisis"/>
-  <table-filter match-catalog="eleganti_siscliv" match-name="detallereceta"/>
-  <table-filter match-catalog="eleganti_siscliv" match-name="estadoatencionmedica"/>
   <table-filter match-catalog="eleganti_siscliv" match-name="historial"/>
   <table-filter match-catalog="eleganti_siscliv" match-name="medicoveterinario"/>
   <table-filter match-catalog="eleganti_siscliv" match-name="opcion"/>

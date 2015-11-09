@@ -1,5 +1,5 @@
 package pe.edu.unmsm.veterinaria.clinica.entities;
-// Generated 25/10/2015 10:09:39 PM by Hibernate Tools 3.4.0.CR1
+// Generated 09/11/2015 12:38:07 AM by Hibernate Tools 4.0.0
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -14,19 +14,17 @@ public class Pagoservicio implements java.io.Serializable {
 	private Paciente paciente;
 	private Date fechaHoraPago;
 	private Integer cantidad;
-	private String descripcion;
 	private BigDecimal pagoServicioTotal;
 
 	public Pagoservicio() {
 	}
 
-	public Pagoservicio(Servicio servicio, Paciente paciente, Date fechaHoraPago, Integer cantidad, String descripcion,
+	public Pagoservicio(Servicio servicio, Paciente paciente, Date fechaHoraPago, Integer cantidad,
 			BigDecimal pagoServicioTotal) {
 		this.servicio = servicio;
 		this.paciente = paciente;
 		this.fechaHoraPago = fechaHoraPago;
 		this.cantidad = cantidad;
-		this.descripcion = descripcion;
 		this.pagoServicioTotal = pagoServicioTotal;
 	}
 
@@ -68,14 +66,6 @@ public class Pagoservicio implements java.io.Serializable {
 
 	public void setCantidad(Integer cantidad) {
 		this.cantidad = cantidad;
-	}
-
-	public String getDescripcion() {
-		return this.descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
 	}
 
 	public BigDecimal getPagoServicioTotal() {

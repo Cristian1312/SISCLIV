@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 25/10/2015 10:09:39 PM by Hibernate Tools 3.4.0.CR1 -->
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09/11/2015 12:38:08 AM by Hibernate Tools 4.0.0 -->
 <hibernate-mapping>
     <class name="pe.edu.unmsm.veterinaria.clinica.entities.Clinicoveterinario" table="clinicoveterinario" catalog="eleganti_siscliv">
         <id name="idClinicoVeterinario" type="java.lang.Integer">
@@ -16,7 +16,7 @@
         </property>
         <set name="analisismedicos" table="analisismedico" inverse="true" lazy="true" fetch="select">
             <key>
-                <column name="ClinicoVeterinario_idClinicoVeterinario" not-null="true" />
+                <column name="ClinicoVeterinario_idClinicoVeterinario" />
             </key>
             <one-to-many class="pe.edu.unmsm.veterinaria.clinica.entities.Analisismedico" />
         </set>
