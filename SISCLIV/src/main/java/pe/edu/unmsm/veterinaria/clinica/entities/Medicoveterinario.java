@@ -1,5 +1,5 @@
 package pe.edu.unmsm.veterinaria.clinica.entities;
-// Generated 09/11/2015 12:38:07 AM by Hibernate Tools 4.0.0
+// Generated 17/11/2015 10:49:36 PM by Hibernate Tools 4.0.0
 
 import java.util.HashSet;
 import java.util.Set;
