@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <h:head>
+        <title>Bienvenidos a SISCLIV!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+        <link href="resources/css/fondo.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="resources/images/favicon.jpg" type="image/x-icon" />
+    </h:head>
+    <h:body>
+        <section class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><b>Relación de Análisis médicos</b></h3></div>
+                <div class="panel-body">
+                    <h:form id="ordenesMedicasForm" styleClass="form-horizontal">
+                        <p:dataTable var="om" value="#{ordenesMedicasBean.ordenes}" emptyMessage="No hay análisis médicos registradas"
+                                     paginator="true" rows="10" paginatorPosition="top"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+                                     {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10"
+                                     style="width: 98%;margin: auto;">
+                            <p:column headerText="Id Análisis" style="text-align: left; width: 70px">
+	                            <h:outputText value="#{om.idAnalisisMedico}" />
+	                        </p:column>
+                            <p:column headerText="Paciente atendido" style="text-align: left; width: 120px">
+	                            <h:outputText value="#{om.atencionmedica.historial.paciente.nombre}" />
+	                        </p:column>
+	                        <p:column headerText="Médico Vet." style="text-align: left; width: 120px">
+	                            <h:outputText value="#{om.clinicoveterinario.nombres}" />
+	                        </p:column>
+	                        <p:column headerText="Tipo análisis" style="text-align: left; width: 120px">
+	                            <h:outputText value="#{om.tipoanalisis.nombre}" />
+	                        </p:column>
+	                        <p:column headerText="Estado" style="text-align: left; width: 90px">
+	                            <h:outputText value="#{om.estadoAnalisisMedico}" />
+	                        </p:column>
+	                        <p:column headerText="Orden" style="width: 100px;">
+	                            <p:commandButton style="width: 120px;" value="Imprimir" actionListener="#{ordenesMedicasBean.imprimirOrdenMedica(actionEvent, om)}"
+	                                    ajax="false" styleClass="btn btn-primary" />
+	                        </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </div>
+            </div>
+        </section>
+    </h:body>
+</html>

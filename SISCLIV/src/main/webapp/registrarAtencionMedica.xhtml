@@ -18,7 +18,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><h3 class="panel-title"><b>Registrar Atención Médica</b></h3></div>
                 <div class="panel-body">
-                    <h:form id="pacientesForm" styleClass="form-horizontal">
+                    <h:form id="atencionMedicaForm" styleClass="form-horizontal">
+                    	<p:growl id="mensajeGeneral" showDetail="true"/>
                         <div class="form-group">
                             <h4>Datos del Paciente</h4>
                             <label for="paciente_nombre" class="col-sm-2 control-label">Nombre</label>
@@ -112,7 +113,16 @@
                                 <p:inputTextarea id="observaciones" value="#{generarAtencionMedicaBean.atencion.observacionesReceta}" 
                                                  rows="3" cols="33" />
                             </div>
-                            <p:commandButton value="Atender" action="#{generarAtencionMedicaBean.finalizarAtencion}"/>
+                        </div>
+                        <div>
+                        	<h4><b>Análisis médicos requeridos</b></h4>
+						    <p:selectManyCheckbox id="gridServicios" value="#{generarAtencionMedicaBean.selectedServices}" layout="responsive" columns="3">
+						        <f:selectItems value="#{generarAtencionMedicaBean.servicios}" var="servicio" itemLabel="#{servicio}" itemValue="#{servicio}" />
+						    </p:selectManyCheckbox>
+                        </div>
+                        <br/>
+                        <div style="margin: auto;">
+                        	<p:commandButton value="Atender" action="#{generarAtencionMedicaBean.finalizarAtencion}"/>
                         </div>
                     </h:form>
                 </div>

@@ -11,10 +11,10 @@
         <many-to-one name="atencionmedica" class="pe.edu.unmsm.veterinaria.clinica.entities.Atencionmedica" fetch="select">
             <column name="AtencionMedica_idAtencionMedica" not-null="true" />
         </many-to-one>
-        <many-to-one name="tipoanalisis" class="pe.edu.unmsm.veterinaria.clinica.entities.Tipoanalisis" fetch="select">
+        <many-to-one name="tipoanalisis" class="pe.edu.unmsm.veterinaria.clinica.entities.Tipoanalisis" cascade="all"  fetch="select">
             <column name="TipoAnalisis_idTipoAnalisis" not-null="true" />
         </many-to-one>
-        <many-to-one name="clinicoveterinario" class="pe.edu.unmsm.veterinaria.clinica.entities.Clinicoveterinario" fetch="select">
+        <many-to-one name="clinicoveterinario" class="pe.edu.unmsm.veterinaria.clinica.entities.Clinicoveterinario" cascade="all" fetch="select">
             <column name="ClinicoVeterinario_idClinicoVeterinario" />
         </many-to-one>
         <property name="estadoAnalisisMedico" type="string">
