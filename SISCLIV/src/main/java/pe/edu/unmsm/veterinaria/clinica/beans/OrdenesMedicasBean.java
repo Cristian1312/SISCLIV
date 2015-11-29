@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.primefaces.context.RequestContext;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -25,10 +26,13 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import pe.edu.unmsm.veterinaria.clinica.dao.AnalisisMedicoDao;
+import pe.edu.unmsm.veterinaria.clinica.dao.ClienteDao;
 import pe.edu.unmsm.veterinaria.clinica.dao.PacienteDao;
 import pe.edu.unmsm.veterinaria.clinica.entities.Analisismedico;
+import pe.edu.unmsm.veterinaria.clinica.entities.Cliente;
 import pe.edu.unmsm.veterinaria.clinica.entities.Paciente;
 import pe.edu.unmsm.veterinaria.clinica.interfaces.IAnalisisMedicoDao;
+import pe.edu.unmsm.veterinaria.clinica.interfaces.IClienteDao;
 import pe.edu.unmsm.veterinaria.clinica.interfaces.IPacienteDao;
 import pe.edu.unmsm.veterinaria.clinica.persistencia.NewHibernateUtil;
 
@@ -42,7 +46,12 @@ public class OrdenesMedicasBean {
 	Session session;
     Transaction transaction;
     
+    private Analisismedico amedico;
 	private List<Analisismedico> ordenes;
+	
+	public OrdenesMedicasBean() {
+		this.amedico = new Analisismedico();
+	}
 	
 	private List<Paciente> getPacienteParaOrdenMedica(int idPaciente) {
         this.session = null;
@@ -61,6 +70,34 @@ public class OrdenesMedicasBean {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                     FacesMessage.SEVERITY_FATAL, "Error", ex.getMessage()));
             return null;
+        } finally {
+            if (this.session != null) {
+                this.session.close();
+            }
+        }
+    }
+	
+	public void actualizarResultados() {
+        this.session = null;
+        this.transaction = null;
+
+        try {
+            this.session = NewHibernateUtil.getSessionFactory().openSession();
+            IAnalisisMedicoDao analisisMedicoDao = new AnalisisMedicoDao();
+            this.transaction = this.session.beginTransaction();
+            this.amedico.setEstadoAnalisisMedico("Atendido");
+            analisisMedicoDao.actualizarAnalisis(this.session, this.amedico);
+            this.transaction.commit();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+                    FacesMessage.SEVERITY_INFO, "Correcto", "Resultados registrados correctamente"));
+            //RequestContext.getCurrentInstance().update("formUroanalisis:msgUroanalisis");
+            this.amedico = new Analisismedico();
+        } catch (Exception ex) {
+            if (this.transaction != null) {
+                transaction.rollback();
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+                    FacesMessage.SEVERITY_FATAL, "Error", ex.getMessage()));
         } finally {
             if (this.session != null) {
                 this.session.close();
@@ -132,5 +169,13 @@ public class OrdenesMedicasBean {
 
 	public void setOrdenes(List<Analisismedico> ordenes) {
 		this.ordenes = ordenes;
+	}
+
+	public Analisismedico getAmedico() {
+		return amedico;
+	}
+
+	public void setAmedico(Analisismedico amedico) {
+		this.amedico = amedico;
 	}
 }

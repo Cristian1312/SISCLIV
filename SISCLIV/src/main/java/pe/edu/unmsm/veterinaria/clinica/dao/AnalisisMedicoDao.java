@@ -33,4 +33,9 @@ public class AnalisisMedicoDao implements IAnalisisMedicoDao {
         }
         return analisisMedicos;
 	}
+
+	@Override
+	public void actualizarAnalisis(Session session, Analisismedico analisismedico) throws Exception {
+		session.update(analisismedico);
+	}
 }
