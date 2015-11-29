@@ -26,8 +26,8 @@ public class AnalisisMedicoDao implements IAnalisisMedicoDao {
         List<Analisismedico> analisisMedicos = criteria.list();
         for (Analisismedico am : analisisMedicos) {
         	Hibernate.initialize(am.getIdAnalisisMedico());
-        	Hibernate.initialize(am.getAtencionmedica().getHistorial().getPaciente());
-        	Hibernate.initialize(am.getClinicoveterinario());
+        	Hibernate.initialize(am.getAtencionmedica().getHistorial().getPaciente().getNombre());
+        	Hibernate.initialize(am.getClinicoveterinario().getNombres());
         	Hibernate.initialize(am.getTipoanalisis());
         	Hibernate.initialize(am.getEstadoAnalisisMedico());
         }

@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.primefaces.context.RequestContext;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
@@ -26,34 +25,34 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import pe.edu.unmsm.veterinaria.clinica.dao.AnalisisMedicoDao;
-import pe.edu.unmsm.veterinaria.clinica.dao.ClienteDao;
 import pe.edu.unmsm.veterinaria.clinica.dao.PacienteDao;
 import pe.edu.unmsm.veterinaria.clinica.entities.Analisismedico;
-import pe.edu.unmsm.veterinaria.clinica.entities.Cliente;
 import pe.edu.unmsm.veterinaria.clinica.entities.Paciente;
 import pe.edu.unmsm.veterinaria.clinica.interfaces.IAnalisisMedicoDao;
-import pe.edu.unmsm.veterinaria.clinica.interfaces.IClienteDao;
 import pe.edu.unmsm.veterinaria.clinica.interfaces.IPacienteDao;
 import pe.edu.unmsm.veterinaria.clinica.persistencia.NewHibernateUtil;
 
 /**
-*
-* @author Cristian1312
-*/
+ *
+ * @author Cristian1312
+ */
 @ManagedBean
 @SessionScoped
 public class OrdenesMedicasBean {
-	Session session;
+
+    Session session;
     Transaction transaction;
-    
+
+    private Analisismedico orden;
+
     private Analisismedico amedico;
-	private List<Analisismedico> ordenes;
-	
-	public OrdenesMedicasBean() {
-		this.amedico = new Analisismedico();
-	}
-	
-	private List<Paciente> getPacienteParaOrdenMedica(int idPaciente) {
+    private List<Analisismedico> ordenes;
+
+    public OrdenesMedicasBean() {
+        this.amedico = new Analisismedico();
+    }
+
+    private List<Paciente> getPacienteParaOrdenMedica(int idPaciente) {
         this.session = null;
         this.transaction = null;
         try {
@@ -76,8 +75,8 @@ public class OrdenesMedicasBean {
             }
         }
     }
-	
-	public void actualizarResultados() {
+
+    public void actualizarResultados() {
         this.session = null;
         this.transaction = null;
 
@@ -105,8 +104,8 @@ public class OrdenesMedicasBean {
         }
     }
 
-	public void imprimirOrdenMedica(ActionEvent actionEvent, Analisismedico am) throws JRException, IOException {
-    	Map<String, Object> parametros = new HashMap<String, Object>();
+    public void imprimirOrdenMedica(ActionEvent actionEvent, Analisismedico am) throws JRException, IOException {
+        Map<String, Object> parametros = new HashMap<String, Object>();
         String sexo = "";
         String fechaNac = "";
         String serviciosElegidos = "";
@@ -114,20 +113,23 @@ public class OrdenesMedicasBean {
         parametros.put("txtNombreFacultad", "Facultad de Medicina Veterinaria");
         parametros.put("txtUniversidad", "UNMSM");
         parametros.put("txtNombreClinica", "Clinica de Animales Menores");
-        
+
         Paciente paciente = this.getPacienteParaOrdenMedica(idPaciente).get(0);
-        if (paciente.getSexo().equals(1)) sexo = "Macho";
-        else sexo = "Hembra";
-        
+        if (paciente.getSexo().equals(1)) {
+            sexo = "Macho";
+        } else {
+            sexo = "Hembra";
+        }
+
         DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
-		fechaNac = fecha.format(paciente.getFechaNac());
-		serviciosElegidos = am.getTipoanalisis().getNombre();
-        
+        fechaNac = fecha.format(paciente.getFechaNac());
+        serviciosElegidos = am.getTipoanalisis().getNombre();
+
         parametros.put("txtServicios", serviciosElegidos);
         parametros.put("txtSexo", sexo);
         parametros.put("txtFechaNac", fechaNac);
-        
-    	File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reportes/ordenMedicaPaciente.jasper"));
+
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reportes/ordenMedicaPaciente.jasper"));
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(this.getPacienteParaOrdenMedica(idPaciente)));
 
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -140,9 +142,9 @@ public class OrdenesMedicasBean {
         stream.close();
         FacesContext.getCurrentInstance().responseComplete();
     }
-	
-	public List<Analisismedico> getOrdenes() {
-		this.session = null;
+
+    public List<Analisismedico> getOrdenes() {
+        this.session = null;
         this.transaction = null;
 
         try {
@@ -151,7 +153,7 @@ public class OrdenesMedicasBean {
             this.transaction = this.session.beginTransaction();
             ordenes = analisisMedicoDao.getAllPendientes(session);
             this.transaction.commit();
-            
+
             return ordenes;
         } catch (Exception ex) {
             if (this.transaction != null) {
@@ -165,17 +167,25 @@ public class OrdenesMedicasBean {
                 this.session.close();
             }
         }
-	}
+    }
 
-	public void setOrdenes(List<Analisismedico> ordenes) {
-		this.ordenes = ordenes;
-	}
+    public void setOrdenes(List<Analisismedico> ordenes) {
+        this.ordenes = ordenes;
+    }
 
-	public Analisismedico getAmedico() {
-		return amedico;
-	}
+    public Analisismedico getOrden() {
+        return orden;
+    }
 
-	public void setAmedico(Analisismedico amedico) {
-		this.amedico = amedico;
-	}
+    public void setOrden(Analisismedico orden) {
+        this.orden = orden;
+    }
+
+    public Analisismedico getAmedico() {
+        return amedico;
+    }
+
+    public void setAmedico(Analisismedico amedico) {
+        this.amedico = amedico;
+    }
 }

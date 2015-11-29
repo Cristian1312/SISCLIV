@@ -28,44 +28,53 @@ import pe.edu.unmsm.veterinaria.clinica.persistencia.NewHibernateUtil;
 @ManagedBean
 @SessionScoped
 public class LoginBean implements Serializable {
-	
-	Session session;
+
+    Session session;
     Transaction transaction;
-	
+
     private Usuario usuario;
-    
+
     @PostConstruct
     public void init() {
         this.usuario = new Usuario();
     }
 
-	public String login() {
-		this.session = null;
+    public String login() {
+        this.session = null;
         this.transaction = null;
         Usuario user;
         FacesMessage facesMessage = null;
         int perfil;
         String view = null;
-        
+
         try {
             this.session = NewHibernateUtil.getSessionFactory().openSession();
             IUsuarioDao usuarioDao = new UsuarioDao();
             this.transaction = this.session.beginTransaction();
             user = usuarioDao.verificarUsuario(this.session, this.usuario);
-            if (user != null) {
-            	FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", user);
-            	perfil = user.getPerfil().getIdPerfil();
+            if (user != null && user.getEstado() == 1) {
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", user);
+                perfil = user.getPerfil().getIdPerfil();
                 facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenido", user.getUsuario());
                 switch (perfil) {
-					case 1:
-						view = "tareasMedicoVeterinario?faces-redirect=true";
-						break;
-					case 3:
-						view = "tareasRecepcionista?faces-redirect=true";
-						break;
-				}
+                    case 1:
+                        view = "tareasMedicoVeterinario?faces-redirect=true";
+                        break;
+                    case 2:
+                        view = "tareasClinicoVeterinario?faces-redirect=true";
+                        break;
+                    case 3:
+                        view = "tareasRecepcionista?faces-redirect=true";
+                        break;
+                    case 4:
+                        view = "tareasAdministrdor?faces-redirect=true";
+                        break;
+                }
+            } else if (user != null && user.getEstado() != 1) {
+                facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Error",
+                        "Estado No Activo");
             } else {
-            	facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Error",
+                facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login Error",
                         "Usuario y/o contraseña incorrectos.");
             }
             FacesContext.getCurrentInstance().addMessage(null, facesMessage);
@@ -80,15 +89,15 @@ public class LoginBean implements Serializable {
                 this.session.close();
             }
         }
-        
+
         return view;
     }
-	
-	public Usuario getUsuario() {
-		return usuario;
-	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

@@ -5,6 +5,7 @@
  */
 package pe.edu.unmsm.veterinaria.clinica.interfaces;
 
+import java.util.List;
 import org.hibernate.Session;
 
 import pe.edu.unmsm.veterinaria.clinica.entities.Usuario;
@@ -16,4 +17,6 @@ public interface IUsuarioDao {
     public Usuario verificarUsuario(Session session, Usuario usuario) throws Exception;
     public Usuario verificarCorreo(Session session, Usuario usuario) throws Exception;
     public void modificarUsuario(Session session, Usuario usuario) throws Exception;
+    public void instertarUsuario(Session session, Usuario usuario) throws Exception;
+    public List<Usuario> getAll(Session session) throws Exception;
 }

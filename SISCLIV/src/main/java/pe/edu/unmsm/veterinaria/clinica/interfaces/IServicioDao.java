@@ -7,5 +7,7 @@ import org.hibernate.Session;
 import pe.edu.unmsm.veterinaria.clinica.entities.Servicio;
 
 public interface IServicioDao {
-	public List<Servicio> getAll(Session session) throws Exception;
+
+    public List<Servicio> getAll(Session session) throws Exception;
+    public void modificarServicio(Session session, Servicio servicio) throws Exception;
 }

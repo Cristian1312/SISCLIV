@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Bienvenidos a SISCLIV!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+        <link href="resources/css/fondo.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="resources/images/favicon.jpg" type="image/x-icon" />
+    </h:head>
+    <h:body>
+        <section class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><b>Registrar Usuario</b></h3></div>
+                <div class="panel-body">
+                    <h:form id="usuarioForm" styleClass="form-horizontal">
+                        <p:growl id="mensajeGeneral" showDetail="false"/>
+                        <div class="form-group">
+                            <label for="usuario" class="col-sm-2 control-label">Usuario</label>
+                            <div class="col-sm-4">
+                                <p:inputText id="usuario" value="#{usuarioBean.usuario.usuario}" required="true" label="Nombres" styleClass="form-control"/>
+                            </div>
+                            <label for="perfil" class="col-sm-2 control-label">Perfil</label>
+                            <div class="col-sm-4">
+                                <p:selectOneMenu id="perfil" value="#{usuarioBean.perfil}" >
+                                    <f:selectItem itemLabel="Médico Veterinario" itemValue="1" />
+                                    <f:selectItem itemLabel="Clínico Veterinario" itemValue="2" />
+                                    <f:selectItem itemLabel="Recepcionista" itemValue="3" />
+                                    <f:selectItem itemLabel="Administrador" itemValue="4" />
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-sm-2 control-label">Password</label>
+                            <div class="col-sm-4">
+                                <p:password id="password" value="#{usuarioBean.usuario.password}" required="true" styleClass="form-control"/>
+                            </div>
+                            <label for="re-password" class="col-sm-2 control-label">Confirme Password</label>
+                            <div class="col-sm-4">
+                                <p:password id="re-password" value="#{usuarioBean.rePassword}" required="true" styleClass="form-control"/>
+                            </div>
+                        </div> 
+                        <div class="form-group">
+                            <label for="nombre" class="col-sm-2 control-label">Nombre Completo</label>
+                            <div class="col-sm-4">
+                                <p:inputText id="nombre" value="#{usuarioBean.usuario.nombrecompleto}" required="true" styleClass="form-control"/>
+                            </div>
+                            <label for="estado" class="col-sm-2 control-label">Estado</label>
+                            <div class="col-sm-4">
+                                <p:selectOneRadio id="estado" value="#{usuarioBean.usuario.estado}" required="true">
+                                    <f:selectItem itemLabel="Activo" itemValue="1" />
+                                    <f:selectItem itemLabel="No Activo" itemValue="0" />
+                                </p:selectOneRadio>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-4" style="padding-left: 75px">
+                                <p:commandButton  value="Guardar" action="#{usuarioBean.registrarUsuario}"
+                                                  ajax="false" styleClass="btn btn-primary"/>
+
+                            </div>
+                            <div class="col-sm-offset-2 col-sm-4" style="padding-left: 75px">
+                                <p:commandButton  value="Cancelar"
+                                                  ajax="false" styleClass="btn btn-primary"/>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+                <h:form id="formMostrar">
+                    <p:dataTable var="usu" value="#{usuarioBean.usuarios}" emptyMessage="No hay usuarios registrados"
+                                 paginator="true" rows="10" paginatorPosition="top"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+                                 {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10"
+                                 style="width: 98%;margin: auto;">
+                        <p:column headerText="Usuario" style="text-align: left; width: 130px">
+                            <h:outputText value="#{usu.usuario}"/>
+                        </p:column>
+                        <p:column headerText="Perfil" style="text-align: left; width: 130px">
+                            <h:outputText value="#{usu.perfil.descripcion}" />
+                        </p:column>
+                        <p:column headerText="Estado" style="text-align: left; width: 110px">
+                            <h:outputText value="#{usu.estado == 1 ? 'Activo' : 'No Activo'}" />
+                        </p:column>
+                        <p:column headerText="Nombre Completo" style="text-align: left; width: 160px">
+                            <h:outputText value="#{usu.nombrecompleto}" />
+                        </p:column>
+                        <p:column headerText="" style="text-align: center; width: 100px">
+                            <p:commandButton value="Editar" oncomplete="PF('dlgmodificar').show();" update=":formModificar">
+                                <f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{usu}" />                 
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <p:dialog id="dlg" header="Modificar Datos de Usuario" showEffect="explode" hideEffect="explode"
+                          widgetVar="dlgmodificar" modal="true" resizable="false">
+                    <h:form id="formModificar" class="form-horizontal">
+                        <p:growl id="msgModificar" showDetail="true"/>
+                        <div class="form-group">
+                            <label for="usuario" class="col-sm-2 control-label">Usuario</label>
+                            <div class="col-sm-4">
+                                <p:inputText id="usuario" value="#{usuarioBean.usuario.usuario}" required="true" label="Nombres" styleClass="form-control"/>
+                            </div>
+                            <label for="perfil" class="col-sm-2 control-label">Perfil</label>
+                            <div class="col-sm-4">
+                                <p:selectOneMenu id="perfil" value="#{usuarioBean.perfil}">
+                                    <f:selectItem itemLabel="Médico Veterinario" itemValue="1" />
+                                    <f:selectItem itemLabel="Clínico Veterinario" itemValue="2" />
+                                    <f:selectItem itemLabel="Recepcionista" itemValue="3" />
+                                    <f:selectItem itemLabel="Administrador" itemValue="4" />
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-sm-2 control-label">Password</label>
+                            <div class="col-sm-4">
+                                <p:password id="password" value="#{usuarioBean.usuario.password}" required="true" styleClass="form-control"/>
+                            </div>
+                            <label for="re-password" class="col-sm-2 control-label">Confirme Password</label>
+                            <div class="col-sm-4">
+                                <p:password id="re-password" value="#{usuarioBean.rePassword}" required="true" styleClass="form-control"/>
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            <label for="nombre" class="col-sm-2 control-label">Nombre Completo</label>
+                            <div class="col-sm-4">
+                                <p:inputText id="nombre" value="#{usuarioBean.usuario.nombrecompleto}" required="true" styleClass="form-control"/>
+                            </div>
+                            <label for="estado" class="col-sm-2 control-label">Estado</label>
+                            <div class="col-sm-4">
+                                <p:selectOneRadio id="estado" value="#{usuarioBean.usuario.estado}" required="true">
+                                    <f:selectItem itemLabel="Activo" itemValue="1" />
+                                    <f:selectItem itemLabel="No Activo" itemValue="0" />
+                                </p:selectOneRadio>
+                            </div>
+                        </div>
+                        <div class="col-sm-offset-2 col-sm-4" style="padding-left: 75px">
+                            <p:commandButton  value="Modificar" action="#{usuarioBean.modificarUsuario}"
+                                              ajax="false" styleClass="btn btn-primary"
+                                              oncomplete="PF('dlgmodificar').hide();"/>
+                        </div>
+                    </h:form>
+                </p:dialog>
+            </div>
+        </section>
+    </h:body>
+</html>

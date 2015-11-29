@@ -21,13 +21,13 @@
                 </div>
                 <div>
                     <ul class="nav navbar-nav navbar-right">
-	                    <!--li><a href="index.xhtml"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li-->
-	                    <h:form>
-		                    <p:commandLink id="logout" actionListener="#{tareasBean.cerrarSesion}" ajax="false"
-		                    	action="/index?faces-redirect=true">
-						        <h:outputText value="Logout" />
-						    </p:commandLink>
-						</h:form>
+                        <!--li><a href="index.xhtml"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li-->
+                        <h:form>
+                            <p:commandLink id="logout" actionListener="#{tareasBean.cerrarSesion}" ajax="false"
+                                           action="/index?faces-redirect=true">
+                                <h:outputText value="Logout" />
+                            </p:commandLink>
+                        </h:form>
                     </ul>
                 </div>
             </div>
@@ -35,8 +35,8 @@
         <div class="col-md-2">
             <ul class="nav nav-pills nav-stacked">
                 <li class="active"><a href="perfil.xhtml" target="formulario" >Página Principal</a></li>
-                <li><a href="generarAtencionMedica.xhtml" target="formulario">Atender paciente</a></li>
-                <li><a href="ordenesMedicas.xhtml" target="formulario">Ordenes Médicas</a></li>
+                <li><a href="consultarExamenesPendientes.xhtml" target="formulario">Consultar Examenes Pendientes</a></li>
+                <li><a href="imprimirResultados.xhtml" target="formulario">Imprimir resultados</a></li>
             </ul>
         </div>
         <div id="page-content-wrapper">
