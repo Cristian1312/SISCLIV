@@ -35,13 +35,145 @@
                             <p:column headerText="Nombre Paciente" style="text-align: left;">
                                 <h:outputText value="#{ord.atencionmedica.historial.paciente.nombre}" />
                             </p:column>
-                            <p:column headerText="Acción" style="text-align: center;">
-                                <p:commandButton value="Atender" action="#{ordenesMedicasBean.actualizarResultados}">
-                                    <f:setPropertyActionListener target="#{ordenesMedicasBean.amedico}" value="#{ord}" /> 
-                                </p:commandButton>
-                            </p:column>
+                            <p:column headerText="Tipo análisis" style="text-align: left;">
+	                            <h:outputText value="#{ord.tipoanalisis.nombre}" />
+	                        </p:column>
+                            <p:column headerText="Resultados" style="text-align: center;">
+	                            <p:commandButton value="Registrar" oncomplete="PF('dlguroanalisis').show();" rendered="#{ord.tipoanalisis.idTipoAnalisis == 1}">
+	                            	<f:setPropertyActionListener target="#{ordenesMedicasBean.amedico}" value="#{ord}" />
+	                           	</p:commandButton>
+	                            <p:commandButton value="Registrar" oncomplete="PF('dlgsangre').show();" rendered="#{ord.tipoanalisis.idTipoAnalisis == 2}">
+	                            	<f:setPropertyActionListener target="#{ordenesMedicasBean.amedico}" value="#{ord}" />
+	                            </p:commandButton>
+	                        </p:column>
                         </p:dataTable>
                     </h:form>
+                    <p:dialog id="dlgUroanalisis" header="Resultados del Uroanálisis" showEffect="explode" hideEffect="explode"
+                          widgetVar="dlguroanalisis" modal="true" resizable="false">
+                    	<h:form id="formUroanalisis" class="form-horizontal">
+                    		<p:growl id="msgUroanalisis" showDetail="true"/>
+	                    	<div class="form-group">
+	                            <label for="color" class="col-sm-2 control-label">Color</label>
+	                            <div class="col-sm-4">
+	                                <p:inputText id="color" value="#{ordenesMedicasBean.amedico.ucolor}" required="true" label="Color" styleClass="form-control"/>
+	                            </div>
+	                            <label for="aspecto" class="col-sm-2 control-label">Aspecto</label>
+	                            <div class="col-sm-4">
+	                                <p:inputText id="aspecto" value="#{ordenesMedicasBean.amedico.uaspecto}" required="true" label="Aspecto" styleClass="form-control"/>
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="densidad" class="col-sm-2 control-label">Densidad</label>
+	                            <div class="col-sm-4">
+	                                <p:inputMask id="densidad" value="#{ordenesMedicasBean.amedico.udensidad}" required="true" label="Densidad" styleClass="form-control"
+	                                	mask="9.999"/>
+	                            </div>
+	                            <label for="ph" class="col-sm-2 control-label">pH</label>
+	                            <div class="col-sm-4">
+	                                <p:inputMask id="ph" value="#{ordenesMedicasBean.amedico.upH}" required="true" label="pH" styleClass="form-control"
+	                                	mask="9?99"/>
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="proteinas" class="col-sm-2 control-label">Proteínas</label>
+	                            <div class="col-sm-4">
+	                                <p:inputText id="proteinas" value="#{ordenesMedicasBean.amedico.uproteinas}" required="true" label="Proteínas" styleClass="form-control"/>
+	                            </div>
+	                            <label for="glucosa" class="col-sm-2 control-label">Glucosa</label>
+	                            <div class="col-sm-4">
+	                                <p:inputText id="glucosa" value="#{ordenesMedicasBean.amedico.uglucosa}" required="true" label="Glucosa" styleClass="form-control"/>
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="hemoglobina" class="col-sm-2 control-label">Hemoglobina</label>
+	                            <div class="col-sm-4">
+	                                <p:inputText id="hemoglobina" value="#{ordenesMedicasBean.amedico.uhemoglobina}" required="true" label="Hemoglobina" styleClass="form-control"/>
+	                            </div>
+	                            <label for="nitritos" class="col-sm-2 control-label">Nitritos</label>
+	                            <div class="col-sm-4">
+	                                <p:inputText id="nitritos" value="#{ordenesMedicasBean.amedico.unitritos}" required="true" label="Nitritos" styleClass="form-control"/>
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="leucocitos" class="col-sm-2 control-label">Leucocitos</label>
+	                            <div class="col-sm-4">
+	                                <p:inputText id="leucocitos" value="#{ordenesMedicasBean.amedico.uleucocitos}" required="true" label="Leucocitos" styleClass="form-control"/>
+	                            </div>
+	                            <label for="eritrocitos" class="col-sm-2 control-label">Eritrocitos</label>
+	                            <div class="col-sm-4">
+	                                <p:inputText id="eritrocitos" value="#{ordenesMedicasBean.amedico.ueritrocitos}" required="true" label="Eritrocitos" styleClass="form-control"/>
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="bacterias" class="col-sm-2 control-label">Bacterias</label>
+	                            <div class="col-sm-4">
+	                                <p:inputText id="bacterias" value="#{ordenesMedicasBean.amedico.ubacterias}" required="true" label="Bacterias" styleClass="form-control"/>
+	                            </div>
+	                            <label for="observaciones" class="col-sm-2 control-label">Observaciones</label>
+	                            <div class="col-sm-4">
+	                                <p:inputTextarea id="observaciones" value="#{ordenesMedicasBean.amedico.uobservaciones}" label="Observaciones" styleClass="form-control"/>
+	                            </div>
+	                        </div>
+	                        <div class="form-group" >
+	                            <div class="col-sm-offset-2 col-sm-4">
+	                                <p:commandButton  value="Registrar" action="#{ordenesMedicasBean.actualizarResultados}"
+	                                                  ajax="false" styleClass="btn btn-primary" style="padding-left: 25px"
+	                                                  oncomplete="PF('dlguroanalisis').hide();" update=":formUroanalisis:msgUroanalisis"/>
+	                            </div>
+	                            <div class="col-sm-offset-2 col-sm-4">
+	                                <p:commandButton  value="Cancelar" oncomplete="PF('dlguroanalisis').hide();" styleClass="btn btn-primary"
+	                                	style="padding-left: 25px"/>
+	                            </div>
+	                        </div>
+                   		</h:form>
+                   	</p:dialog>
+                   	<p:dialog id="dlgSangre" header="Resultados del Análisis de sangre" showEffect="explode" hideEffect="explode"
+                          widgetVar="dlgsangre" modal="true" resizable="false">
+                    	<h:form id="formSangre" class="form-horizontal">
+                    		<p:growl id="msgSangre" showDetail="true"/>
+	                    	<div class="form-group">
+	                            <label for="hematocrito" class="col-sm-2 control-label">Hematocrito</label>
+	                            <div class="col-sm-4">
+	                                <p:inputText id="hematocrito" value="#{ordenesMedicasBean.amedico.shematocrito}" required="true" label="Hematocrito" styleClass="form-control"/>
+	                            </div>
+	                            <label for="hemoglobina" class="col-sm-2 control-label">Hemoglobina</label>
+	                            <div class="col-sm-4">
+	                                <p:inputText id="hemoglobina" value="#{ordenesMedicasBean.amedico.shemoglobina}" required="true" label="Hemoglobina" styleClass="form-control"/>
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="leucocitos" class="col-sm-2 control-label">Leucocitos</label>
+	                            <div class="col-sm-4">
+	                                <p:inputText id="leucocitos" value="#{ordenesMedicasBean.amedico.sleucocitos}" required="true" label="Leucocitos" styleClass="form-control"/>
+	                            </div>
+	                            <label for="neutrofilos" class="col-sm-2 control-label">Neutrofilos</label>
+	                            <div class="col-sm-4">
+	                                <p:inputText id="neutrofilos" value="#{ordenesMedicasBean.amedico.sneutrofilos}" required="true" label="Neutrofilos" styleClass="form-control"/>
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="linfocitos" class="col-sm-2 control-label">Linfocitos</label>
+	                            <div class="col-sm-4">
+	                                <p:inputText id="linfocitos" value="#{ordenesMedicasBean.amedico.slinfocitos}" required="true" label="Linfocitos" styleClass="form-control"/>
+	                            </div>
+	                            <label for="plaquetas" class="col-sm-2 control-label">Plaquetas</label>
+	                            <div class="col-sm-4">
+	                                <p:inputText id="plaquetas" value="#{ordenesMedicasBean.amedico.splaquetas}" required="true" label="Plaquetas" styleClass="form-control"/>
+	                            </div>
+	                        </div>
+	                        <div class="form-group">
+	                            <label for="observaciones" class="col-sm-2 control-label">Observaciones</label>
+	                            <div class="col-sm-4">
+	                                <p:inputText id="observaciones" value="#{ordenesMedicasBean.amedico.sobservaciones}" required="true" label="Observaciones" styleClass="form-control"/>
+	                            </div>
+	                            <div class="col-sm-offset-2 col-sm-4" style="padding-left: 75px">
+	                                <p:commandButton  value="Registrar" action="#{ordenesMedicasBean.actualizarResultados}"
+	                                                  ajax="false" styleClass="btn btn-primary" update=":formSangre:msgSangre"
+	                                                  oncomplete="PF('dlgsangre').hide();"/>
+	                            </div>
+	                        </div>
+                   		</h:form>
+                   	</p:dialog>
                 </div>
             </div>
         </section>

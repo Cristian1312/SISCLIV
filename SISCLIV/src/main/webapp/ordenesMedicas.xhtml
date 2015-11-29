@@ -43,14 +43,6 @@
 	                            <p:commandButton style="width: 120px;" value="Imprimir" actionListener="#{ordenesMedicasBean.imprimirOrdenMedica(actionEvent, om)}"
 	                                    ajax="false" />
 	                        </p:column>
-	                        <p:column headerText="Resultados" style="text-align: center; width: 70px;">
-	                            <p:commandButton value="Registrar" oncomplete="PF('dlguroanalisis').show();" rendered="#{om.tipoanalisis.idTipoAnalisis == 1}">
-	                            	<f:setPropertyActionListener target="#{ordenesMedicasBean.amedico}" value="#{om}" />
-	                           	</p:commandButton>
-	                            <p:commandButton value="Registrar" oncomplete="PF('dlgsangre').show();" rendered="#{om.tipoanalisis.idTipoAnalisis == 2}">
-	                            	<f:setPropertyActionListener target="#{ordenesMedicasBean.amedico}" value="#{om}" />
-	                            </p:commandButton>
-	                        </p:column>
                         </p:dataTable>
                     </h:form>
                     <p:dialog id="dlgUroanalisis" header="Resultados del Uroanálisis" showEffect="explode" hideEffect="explode"
