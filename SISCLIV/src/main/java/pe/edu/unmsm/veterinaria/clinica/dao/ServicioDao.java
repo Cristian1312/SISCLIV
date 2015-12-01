@@ -3,6 +3,7 @@ package pe.edu.unmsm.veterinaria.clinica.dao;
 import java.util.List;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -32,6 +33,25 @@ public class ServicioDao implements IServicioDao {
                 System.out.println("ALGO SALIO MAL");
                 System.out.println(e.toString());
             }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    @Override
+    public List<Servicio> listarServicios(Session session) {
+        List<Servicio> servicios;
+        try {
+            session = NewHibernateUtil.getSessionFactory().openSession();
+            Query query = session.createQuery("from Servicio");
+            servicios = (List<Servicio>) query.list();
+            System.out.println("listarServicios--->retorna lista de servicios con "+servicios.size()+"elementos");
+            return servicios;
+        } catch (Exception ex) {
+            System.out.println(ex);
+            return null;
         } finally {
             if (session != null) {
                 session.close();

@@ -35,28 +35,28 @@ import pe.edu.unmsm.veterinaria.clinica.services.RegistrarPagoService;
 @ManagedBean
 @SessionScoped
 public class RegistrarPagoBean implements Serializable {
-	Session session;
+    Session session;
     Transaction transaction;
-    
+
     private Pagoservicio pagoservicio;
     private Paciente paciente;
     private Servicio servicio;
     private List<SelectItem> selectItemsOneServicio;
-    
+
     @ManagedProperty("#{registrarPagoService}")
     private RegistrarPagoService registrarPagoService;
-    
-    public RegistrarPagoBean() {
-		this.paciente = new Paciente();
-		this.servicio = new Servicio();
-	}
 
-	public List<Paciente> completePaciente(String query) {
+    public RegistrarPagoBean() {
+        this.paciente = new Paciente();
+        this.servicio = new Servicio();
+    }
+
+    public List<Paciente> completePaciente(String query) {
         List<Paciente> pacientes = this.registrarPagoService.getPacientes();
         List<Paciente> pacientesFiltrados = new ArrayList<Paciente>();
 
         for (int i = 0; i < pacientes.size(); i++) {
-        	Paciente pa = pacientes.get(i);
+            Paciente pa = pacientes.get(i);
             if (String.valueOf(pa.getIdPaciente()).startsWith(query)) {
                 pacientesFiltrados.add(pa);
             }
@@ -64,25 +64,25 @@ public class RegistrarPagoBean implements Serializable {
 
         return pacientesFiltrados;
     }
-	
-	public void registrarPagoServicio() {
-		this.session = null;
+
+    public void registrarPagoServicio() {
+        this.session = null;
         this.transaction = null;
-        
+
         try {
-        	this.session = NewHibernateUtil.getSessionFactory().openSession();
-        	IPagoServicioDao pagoServicioDao = new PagoServicioDao();
-        	IAtencionMedicaDao atencionMedicaDao = new AtencionMedicaDao();
-        	this.transaction = this.session.beginTransaction();
-        	Pagoservicio pagoServicio = new Pagoservicio(this.servicio, this.paciente, new Date(), null, null);
+            this.session = NewHibernateUtil.getSessionFactory().openSession();
+            IPagoServicioDao pagoServicioDao = new PagoServicioDao();
+            IAtencionMedicaDao atencionMedicaDao = new AtencionMedicaDao();
+            this.transaction = this.session.beginTransaction();
+            Pagoservicio pagoServicio = new Pagoservicio(this.servicio, this.paciente, new Date(), null, null);
         	Historial historial = new Historial();historial.setIdHistorial(this.paciente.getIdPaciente());
         	Medicoveterinario mv = new Medicoveterinario();mv.setIdMedicoVeterinario(1);
-        	Atencionmedica atencionMedica = new Atencionmedica(historial, mv, "Sin atender", null, null,
-        			null, null, null, null, null, null, null, null);
-        	pagoServicioDao.insertarPagoServicio(this.session, pagoServicio);
-        	atencionMedicaDao.insertarAtencionMedica(this.session, atencionMedica);
-        	this.transaction.commit();
-        	FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
+            Atencionmedica atencionMedica = new Atencionmedica(historial, mv, "Sin atender", null, null,
+                    null, null, null, null, null, null, null, null);
+            pagoServicioDao.insertarPagoServicio(this.session, pagoServicio);
+            atencionMedicaDao.insertarAtencionMedica(this.session, atencionMedica);
+            this.transaction.commit();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(
                     FacesMessage.SEVERITY_INFO, "Correcto", "Pago registrado correctamente"));
             RequestContext.getCurrentInstance().update("formPaciente:msgPagar");
             pagoServicio = new Pagoservicio();
@@ -99,20 +99,20 @@ public class RegistrarPagoBean implements Serializable {
                 this.session.close();
             }
         }
-	}
+    }
 
-	public Paciente getPaciente() {
-		return paciente;
-	}
+    public Paciente getPaciente() {
+        return paciente;
+    }
 
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
-	}
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
 
-	public List<SelectItem> getSelectItemsOneServicio() {
-		this.session = null;
+    public List<SelectItem> getSelectItemsOneServicio() {
+        this.session = null;
         this.transaction = null;
-        
+
         try {
             this.session = NewHibernateUtil.getSessionFactory().openSession();
             this.selectItemsOneServicio = new ArrayList<>();
@@ -125,7 +125,7 @@ public class RegistrarPagoBean implements Serializable {
                 this.selectItemsOneServicio.add(selectItem);
             }
             this.transaction.commit();
-            
+
             return selectItemsOneServicio;
         } catch (Exception ex) {
             if(this.transaction != null) {
@@ -139,33 +139,33 @@ public class RegistrarPagoBean implements Serializable {
                 this.session.close();
             }
         }
-	}
+    }
 
-	public void setSelectItemsOneServicio(List<SelectItem> selectItemsOneServicio) {
-		this.selectItemsOneServicio = selectItemsOneServicio;
-	}
+    public void setSelectItemsOneServicio(List<SelectItem> selectItemsOneServicio) {
+        this.selectItemsOneServicio = selectItemsOneServicio;
+    }
 
-	public Servicio getServicio() {
-		return servicio;
-	}
+    public Servicio getServicio() {
+        return servicio;
+    }
 
-	public void setServicio(Servicio servicio) {
-		this.servicio = servicio;
-	}
+    public void setServicio(Servicio servicio) {
+        this.servicio = servicio;
+    }
 
-	public RegistrarPagoService getRegistrarPagoService() {
-		return registrarPagoService;
-	}
+    public RegistrarPagoService getRegistrarPagoService() {
+        return registrarPagoService;
+    }
 
-	public void setRegistrarPagoService(RegistrarPagoService registrarPagoService) {
-		this.registrarPagoService = registrarPagoService;
-	}
+    public void setRegistrarPagoService(RegistrarPagoService registrarPagoService) {
+        this.registrarPagoService = registrarPagoService;
+    }
 
-	public Pagoservicio getPagoservicio() {
-		return pagoservicio;
-	}
+    public Pagoservicio getPagoservicio() {
+        return pagoservicio;
+    }
 
-	public void setPagoservicio(Pagoservicio pagoservicio) {
-		this.pagoservicio = pagoservicio;
-	}
-}
+    public void setPagoservicio(Pagoservicio pagoservicio) {
+        this.pagoservicio = pagoservicio;
+    }
+    }

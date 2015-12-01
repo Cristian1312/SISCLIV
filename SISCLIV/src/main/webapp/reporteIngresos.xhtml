@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Bienvenidos a SISCLIV!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen" />
+        <link href="resources/css/fondo.css" rel="stylesheet" media="screen" />
+        <link rel="shortcut icon" href="resources/images/favicon.jpg" type="image/x-icon" />
+    </h:head>
+    <h:body>
+        <section class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading"><h3 class="panel-title"><b>Generar Reporte de Servicios</b></h3></div>
+                <h:form id="formMostrar">
+                    <p:dataTable var="itm" value="#{perfilBean.itemsReporte}" emptyMessage="No hay resultados"
+                                 paginator="true" rows="10" paginatorPosition="top"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks}
+                                 {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" rowsPerPageTemplate="10"
+                                 style="width: 98%;margin: auto;">
+                        <p:column headerText="Nombre" style="text-align: left; width: 350px">
+                            <h:outputText value="#{itm.nombre}"/>
+                        </p:column>
+                        <p:column headerText="Precio" style="text-align: left; width: 80px">
+                            <h:outputText value="#{itm.tarifa}" />
+                        </p:column>
+                        <p:column headerText="Cantidad" style="text-align: left; width: 80px">
+                            <h:outputText value="#{itm.cantidad}" />
+                        </p:column>
+                        <p:column headerText="Sub-Total" style="text-align: left; width: 100px">
+                            <h:outputText value="#{itm.subtotal}" />
+                        </p:column>
+                    </p:dataTable>
+                    <div align="right">
+                        <h2> 
+                            <label for="total" class="col-sm-2 control-label">Total</label>
+                            <div class="col-sm-4">
+                                <h:outputLabel id="total" value="#{perfilBean.total}" 
+                                               styleClass="form-control" style="font-size: larger"/>
+                            </div>
+                        </h2>
+                    </div>
+                </h:form>
+            </div>
+        </section>
+    </h:body>
+</html>

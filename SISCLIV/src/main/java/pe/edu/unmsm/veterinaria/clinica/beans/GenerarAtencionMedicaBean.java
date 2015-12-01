@@ -69,14 +69,14 @@ public class GenerarAtencionMedicaBean {
 
     @PostConstruct
     public void init() {
-    	this.servicios = new ArrayList<String>();
-    	servicios.add("Uroanalisis");
-    	servicios.add("Analisis de sangre");
-    	setDisableButtonImprimir(false);
+        this.servicios = new ArrayList<String>();
+        servicios.add("Uroanalisis");
+        servicios.add("Analisis de sangre");
+        setDisableButtonImprimir(false);
     }
-    
+
     public GenerarAtencionMedicaBean() {
-    	setDisableButtonImprimir(false);
+        setDisableButtonImprimir(false);
     }
 
     public String registrarAtencion() {
@@ -133,7 +133,7 @@ public class GenerarAtencionMedicaBean {
             }
         }
     }
-    
+
     /******************Para generar Orden Medica********************/
     public List<Paciente> getPacienteParaOrdenMedica(int idPaciente) {
         this.session = null;
@@ -158,17 +158,17 @@ public class GenerarAtencionMedicaBean {
             }
         }
     }
-    
+
     private void addAnalisisMedico(Analisismedico analisismedico) {
-		this.session = null;
+        this.session = null;
         this.transaction = null;
-        
+
         try {
-        	this.session = NewHibernateUtil.getSessionFactory().openSession();
-        	IAnalisisMedicoDao analisisMedicoDao = new AnalisisMedicoDao();
-        	this.transaction = this.session.beginTransaction();
-        	analisisMedicoDao.insertarAnalisisMedico(this.session, analisismedico);
-        	this.transaction.commit();
+            this.session = NewHibernateUtil.getSessionFactory().openSession();
+            IAnalisisMedicoDao analisisMedicoDao = new AnalisisMedicoDao();
+            this.transaction = this.session.beginTransaction();
+            analisisMedicoDao.insertarAnalisisMedico(this.session, analisismedico);
+            this.transaction.commit();
         } catch (Exception ex) {
             if (this.transaction != null) {
                 transaction.rollback();
@@ -181,64 +181,64 @@ public class GenerarAtencionMedicaBean {
                 this.session.close();
             }
         }
-	}
-    
+    }
+
     public void generarOrdenMedicaPaciente(Atencionmedica atM) {
-    	Analisismedico uroanalisis = null;
+        Analisismedico uroanalisis = null;
         Analisismedico sanguineo = null;
         ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
         Usuario user = (Usuario) context.getSessionMap().get("usuario");
         Clinicoveterinario cVet = new Clinicoveterinario(user.getNombrecompleto(), "", null);
         cVet.setIdClinicoVeterinario(user.getIdUsuario());
-        
+
         Tipoanalisis uro = new Tipoanalisis();uro.setIdTipoAnalisis(1);
-		uroanalisis = new Analisismedico(atM, uro, cVet, "Pendiente", null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-		
+        uroanalisis = new Analisismedico(atM, uro, cVet, "Pendiente", null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
 		Tipoanalisis sangre = new Tipoanalisis();sangre.setIdTipoAnalisis(2);
-		sanguineo = new Analisismedico(atM, sangre, cVet, "Pendiente", null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-        
-		if (this.selectedServices != null) {
-			setDisableButtonImprimir(true);
-	        if (this.selectedServices.length == 2) {
-	        	this.addAnalisisMedico(uroanalisis);
-	        	this.addAnalisisMedico(sanguineo);
-			} else {
-				if (this.selectedServices[0].equals("Uroanalisis")) {
-					this.addAnalisisMedico(uroanalisis);
-				} else {
-					this.addAnalisisMedico(sanguineo);
-				}
-			}
-		}
+        sanguineo = new Analisismedico(atM, sangre, cVet, "Pendiente", null, null, null, null, null,
+                null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+        if (this.selectedServices != null) {
+            setDisableButtonImprimir(true);
+            if (this.selectedServices.length == 2) {
+                this.addAnalisisMedico(uroanalisis);
+                this.addAnalisisMedico(sanguineo);
+            } else {
+                if (this.selectedServices[0].equals("Uroanalisis")) {
+                    this.addAnalisisMedico(uroanalisis);
+                } else {
+                    this.addAnalisisMedico(sanguineo);
+                }
+            }
+        }
     }
-    
+
     public void imprimirOrdenMedica(ActionEvent actionEvent) throws JRException, IOException {
-    	Map<String, Object> parametros = new HashMap<String, Object>();
+        Map<String, Object> parametros = new HashMap<String, Object>();
         String sexo = "";
         String fechaNac = "";
         String serviciosElegidos = "";
         parametros.put("txtNombreFacultad", "Facultad de Medicina Veterinaria");
         parametros.put("txtUniversidad", "UNMSM");
         parametros.put("txtNombreClinica", "Clinica de Animales Menores");
-		parametros.put("txtSexo", sexo);
+        parametros.put("txtSexo", sexo);
         parametros.put("txtFechaNac", fechaNac);
-        
+
         Paciente paciente = this.getPacienteParaOrdenMedica(p.getIdPaciente()).get(0);
         if (paciente.getSexo().equals(1)) sexo = "Macho";
         else sexo = "Hembra";
-        
+
         DateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
-		fechaNac = fecha.format(paciente.getFechaNac());
-        
+        fechaNac = fecha.format(paciente.getFechaNac());
+
         for (int i = 0;i < this.selectedServices.length;i++) {
-        	serviciosElegidos = this.selectedServices[i] + ", " + serviciosElegidos;
+            serviciosElegidos = this.selectedServices[i] + ", " + serviciosElegidos;
         }
-        
+
         parametros.put("txtServicios", serviciosElegidos);
-        
-    	File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reportes/ordenMedicaPaciente.jasper"));
+
+        File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("/reportes/ordenMedicaPaciente.jasper"));
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parametros, new JRBeanCollectionDataSource(this.getPacienteParaOrdenMedica(p.getIdPaciente())));
 
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -264,43 +264,43 @@ public class GenerarAtencionMedicaBean {
         this.atencion = atencion;
     }
 
-	public Paciente getP() {
-		return p;
-	}
+    public Paciente getP() {
+        return p;
+    }
 
-	public void setP(Paciente p) {
-		this.p = p;
-	}
+    public void setP(Paciente p) {
+        this.p = p;
+    }
 
-	public List<Paciente> getPacientes() {
-		return pacientes;
-	}
+    public List<Paciente> getPacientes() {
+        return pacientes;
+    }
 
-	public void setPacientes(List<Paciente> pacientes) {
-		this.pacientes = pacientes;
-	}
+    public void setPacientes(List<Paciente> pacientes) {
+        this.pacientes = pacientes;
+    }
 
-	public String[] getSelectedServices() {
-		return selectedServices;
-	}
+    public String[] getSelectedServices() {
+        return selectedServices;
+    }
 
-	public void setSelectedServices(String[] selectedServices) {
-		this.selectedServices = selectedServices;
-	}
+    public void setSelectedServices(String[] selectedServices) {
+        this.selectedServices = selectedServices;
+    }
 
-	public List<String> getServicios() {
-		return servicios;
-	}
+    public List<String> getServicios() {
+        return servicios;
+    }
 
-	public void setServicios(List<String> servicios) {
-		this.servicios = servicios;
-	}
+    public void setServicios(List<String> servicios) {
+        this.servicios = servicios;
+    }
 
-	public boolean isDisableButtonImprimir() {
-		return disableButtonImprimir;
-	}
+    public boolean isDisableButtonImprimir() {
+        return disableButtonImprimir;
+    }
 
-	public void setDisableButtonImprimir(boolean disableButtonImprimir) {
-		this.disableButtonImprimir = disableButtonImprimir;
-	}
-}
+    public void setDisableButtonImprimir(boolean disableButtonImprimir) {
+        this.disableButtonImprimir = disableButtonImprimir;
+    }
+    }
